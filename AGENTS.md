@@ -22,6 +22,8 @@
 - `client.js` 是构建产物，不要手改。DSH 客户端每个包只加载一个 `client.js`，所以源码必须打包。
 - 改源码后运行 `npm run build`（`scripts/build-client.mjs`，esbuild），再刷新页面验证。
 - 提交前跑 `npm run check`：语法检查 + 校验 `client.js` 与 `src/client` 一致。
+- 当前 profile 用本地 tgz 安装（profile `package.json` 里 `dsh-dsbot-tweaks` 指向仓库根目录的 `*.tgz`，`file:` 依赖）。改完源码要 `npm run build` → `pnpm pack` → 在 profile 里重装新 tgz（先移除旧 bundle，再安装）。开发期也可以临时用 link 安装。
+- tgz 被 `.gitignore` 忽略，不提交；安装后 profile 里有独立副本，删掉仓库里的 tgz 不影响已装版本。
 - `pnpm-workspace.yaml` 里显式禁用了 esbuild 的安装脚本（`allowBuilds: esbuild: false`）：它用平台预编译包即可工作，不需要执行安装脚本。
 
 ## 改动时的边界

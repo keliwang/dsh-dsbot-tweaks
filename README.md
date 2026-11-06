@@ -19,16 +19,19 @@ Requires **DS Bot** in the target profile (verified with ds-bot 0.3.0).
 **Harness Desktop (macOS, Windows)**
 
 1. Open **Plugins** in the sidebar → **Add plugin**.
-2. Enter this repository's absolute path, e.g. `/path/to/dsh-dsbot-tweaks`.
+2. Enter the absolute path of the packed tgz, e.g. `/path/to/dsh-dsbot-tweaks-0.1.0.tgz`; the repository directory (link install) also works while developing.
 3. Install, then refresh the page (⌘R / Ctrl+R). If DSH asks for a restart, quit it completely and reopen.
 
 **Harness Web / CLI**
 
 ```sh
-dsh plugin --profile <profile> add /path/to/dsh-dsbot-tweaks
+cd dsh-dsbot-tweaks
+npm run build
+pnpm pack
+dsh plugin --profile <profile> add ./dsh-dsbot-tweaks-0.1.0.tgz
 ```
 
-The package has no host-side dependencies, so installing straight from the source directory (link) works — no packing needed.
+The package has no host-side dependencies. Install the tgz for day-to-day use (fixed version); while developing, `add /path/to/dsh-dsbot-tweaks` (link install) picks up a rebuild on refresh.
 
 ## Use
 
@@ -85,7 +88,7 @@ npm run build    # src/client → client.js
 npm run check    # fails when client.js is stale
 ```
 
-Rebuild after source edits, then refresh the page. Plugin conventions are documented in the DSH source at `docs/user/develop/basic/publish.md`.
+Rebuild after source edits, then refresh the page. If the profile installed the tgz, also `pnpm pack` and reinstall it (remove the old bundle first, then install the new tgz); with a link install a rebuild is enough. Plugin conventions are documented in the DSH source at `docs/user/develop/basic/publish.md`.
 
 When testing in DS Bot: confirm a tweak appears as expected, that repeated passes do not insert duplicates, and that it disappears where it should not apply.
 

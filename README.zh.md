@@ -19,16 +19,19 @@
 **Harness Desktop（macOS、Windows）**
 
 1. 侧栏点 **插件** → **添加插件**。
-2. **包名或地址** 填本仓库的绝对路径，例如 `/path/to/dsh-dsbot-tweaks`。
+2. **包名或地址** 填打包好的 tgz 绝对路径，例如 `/path/to/dsh-dsbot-tweaks-0.1.0.tgz`；开发时也可以填仓库目录（link 方式）。
 3. 点 **安装**，刷新页面（⌘R / Ctrl+R）。如果提示需要重启 DSH，完全退出再打开。
 
 **Harness Web / CLI**
 
 ```sh
-dsh plugin --profile <profile> add /path/to/dsh-dsbot-tweaks
+cd dsh-dsbot-tweaks
+npm run build
+pnpm pack
+dsh plugin --profile <profile> add ./dsh-dsbot-tweaks-0.1.0.tgz
 ```
 
-这个包没有 Host 侧依赖，直接从源码目录安装（link）即可，不需要先打包。
+这个包没有 Host 侧依赖。日常使用装 tgz（版本固定）；开发时也可以 `add /path/to/dsh-dsbot-tweaks` 用 link 安装，改完刷新即可。
 
 ## 使用
 
@@ -85,7 +88,7 @@ npm run build    # src/client → client.js
 npm run check    # 校验 client.js 与 src/client 一致
 ```
 
-改完源码要重新构建再刷新页面。插件规范（bundle、patch、`dsh.client` manifest）见 DSH 源码的 `docs/user/develop/basic/publish.zh.md`。
+改完源码要重新构建再刷新页面。如果 profile 装的是 tgz，还要重新 `pnpm pack` 并重装（先移除旧 bundle，再装新 tgz）；用 link 安装时构建完直接刷新即可。插件规范（bundle、patch、`dsh.client` manifest）见 DSH 源码的 `docs/user/develop/basic/publish.zh.md`。
 
 调试时在 DS Bot 界面里确认：改动按预期出现、重复触发不会插入两份、切换界面后该消失的会消失。
 
