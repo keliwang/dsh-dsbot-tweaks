@@ -1,0 +1,59 @@
+{
+  "name": "dsh-dsbot-tweaks",
+  "version": "0.1.0",
+  "description": "Small DS Bot UI tweaks for DeepSeek Harness, kept in one bundle: currently adds a native-interface switch button beside DS Bot's bottom-left settings gear.",
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "dsh",
+    "ds-bot",
+    "tweaks",
+    "ui"
+  ],
+  "license": "MIT",
+  "author": "Keli",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keliwang/dsh-dsbot-tweaks.git"
+  },
+  "homepage": "https://github.com/keliwang/dsh-dsbot-tweaks#readme",
+  "bugs": {
+    "url": "https://github.com/keliwang/dsh-dsbot-tweaks/issues"
+  },
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "src/",
+    "docs/",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "README.zh.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "node scripts/build-client.mjs",
+    "check": "node --check index.js && node scripts/build-client.mjs --check"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true
+    }
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}
